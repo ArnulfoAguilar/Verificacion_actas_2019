@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtRECIBIDOS" msprop:Generator_TableClassName="dtRECIBIDOSDataTable" msprop:Generator_TableVarName="tabledtRECIBIDOS" msprop:Generator_RowChangedName="dtRECIBIDOSRowChanged" msprop:Generator_TablePropName="dtRECIBIDOS" msprop:Generator_RowDeletingName="dtRECIBIDOSRowDeleting" msprop:Generator_RowChangingName="dtRECIBIDOSRowChanging" msprop:Generator_RowEvHandlerName="dtRECIBIDOSRowChangeEventHandler" msprop:Generator_RowDeletedName="dtRECIBIDOSRowDeleted" msprop:Generator_RowClassName="dtRECIBIDOSRow" msprop:Generator_UserTableName="dtRECIBIDOS" msprop:Generator_RowEvArgName="dtRECIBIDOSRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NOMBRE_TIPO_ELECCION" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_TIPO_ELECCION" msprop:Generator_ColumnPropNameInRow="NOMBRE_TIPO_ELECCION" msprop:Generator_ColumnPropNameInTable="NOMBRE_TIPO_ELECCIONColumn" msprop:Generator_UserColumnName="NOMBRE_TIPO_ELECCION" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_TIPO_FOLIO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_TIPO_FOLIO" msprop:Generator_ColumnPropNameInRow="NOMBRE_TIPO_FOLIO" msprop:Generator_ColumnPropNameInTable="NOMBRE_TIPO_FOLIOColumn" msprop:Generator_UserColumnName="NOMBRE_TIPO_FOLIO" type="xs:string" minOccurs="0" />
+              <xs:element name="JRV" msprop:Generator_ColumnVarNameInTable="columnJRV" msprop:Generator_ColumnPropNameInRow="JRV" msprop:Generator_ColumnPropNameInTable="JRVColumn" msprop:Generator_UserColumnName="JRV" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnPropNameInRow="NOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnPropNameInTable="NOMBRE_CENTRO_VOTACIONColumn" msprop:Generator_UserColumnName="NOMBRE_CENTRO_VOTACION" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_MUNICIPIO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_MUNICIPIO" msprop:Generator_ColumnPropNameInRow="NOMBRE_MUNICIPIO" msprop:Generator_ColumnPropNameInTable="NOMBRE_MUNICIPIOColumn" msprop:Generator_UserColumnName="NOMBRE_MUNICIPIO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_DEPARTAMENTO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_DEPARTAMENTO" msprop:Generator_ColumnPropNameInRow="NOMBRE_DEPARTAMENTO" msprop:Generator_ColumnPropNameInTable="NOMBRE_DEPARTAMENTOColumn" msprop:Generator_UserColumnName="NOMBRE_DEPARTAMENTO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_RECIBIDA" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_RECIBIDA" msprop:Generator_ColumnPropNameInRow="NOMBRE_RECIBIDA" msprop:Generator_ColumnPropNameInTable="NOMBRE_RECIBIDAColumn" msprop:Generator_UserColumnName="NOMBRE_RECIBIDA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtPasos" msprop:Generator_TableClassName="dtPasosDataTable" msprop:Generator_TableVarName="tabledtPasos" msprop:Generator_RowChangedName="dtPasosRowChanged" msprop:Generator_TablePropName="dtPasos" msprop:Generator_RowDeletingName="dtPasosRowDeleting" msprop:Generator_RowChangingName="dtPasosRowChanging" msprop:Generator_RowEvHandlerName="dtPasosRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPasosRowDeleted" msprop:Generator_RowClassName="dtPasosRow" msprop:Generator_UserTableName="dtPasos" msprop:Generator_RowEvArgName="dtPasosRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="JRV" msprop:Generator_ColumnVarNameInTable="columnJRV" msprop:Generator_ColumnPropNameInRow="JRV" msprop:Generator_ColumnPropNameInTable="JRVColumn" msprop:Generator_UserColumnName="JRV" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_ESTADO" msprop:Generator_ColumnVarNameInTable="columnID_ESTADO" msprop:Generator_ColumnPropNameInRow="ID_ESTADO" msprop:Generator_ColumnPropNameInTable="ID_ESTADOColumn" msprop:Generator_UserColumnName="ID_ESTADO" type="xs:string" minOccurs="0" />
+              <xs:element name="DESCRIPCION" msprop:Generator_ColumnVarNameInTable="columnDESCRIPCION" msprop:Generator_ColumnPropNameInRow="DESCRIPCION" msprop:Generator_ColumnPropNameInTable="DESCRIPCIONColumn" msprop:Generator_UserColumnName="DESCRIPCION" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnPropNameInRow="NOMBRE_CENTRO_VOTACION" msprop:Generator_ColumnPropNameInTable="NOMBRE_CENTRO_VOTACIONColumn" msprop:Generator_UserColumnName="NOMBRE_CENTRO_VOTACION" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_MUNICIPIO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_MUNICIPIO" msprop:Generator_ColumnPropNameInRow="NOMBRE_MUNICIPIO" msprop:Generator_ColumnPropNameInTable="NOMBRE_MUNICIPIOColumn" msprop:Generator_UserColumnName="NOMBRE_MUNICIPIO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_DEPARTAMENTO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_DEPARTAMENTO" msprop:Generator_ColumnPropNameInRow="NOMBRE_DEPARTAMENTO" msprop:Generator_ColumnPropNameInTable="NOMBRE_DEPARTAMENTOColumn" msprop:Generator_UserColumnName="NOMBRE_DEPARTAMENTO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE_TIPO_FOLIO" msprop:Generator_ColumnVarNameInTable="columnNOMBRE_TIPO_FOLIO" msprop:Generator_ColumnPropNameInRow="NOMBRE_TIPO_FOLIO" msprop:Generator_ColumnPropNameInTable="NOMBRE_TIPO_FOLIOColumn" msprop:Generator_UserColumnName="NOMBRE_TIPO_FOLIO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

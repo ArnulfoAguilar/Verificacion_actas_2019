@@ -1,0 +1,763 @@
+﻿
+
+-- Create editions section -------------------------------------------------
+
+--CREATE EDITION ORA$BASE;
+
+
+-- Create sequences section -------------------------------------------------
+
+CREATE SEQUENCE FOLIO_SEQ
+ INCREMENT BY 1
+ MAXVALUE 999999999999
+ MINVALUE 0
+ NOCACHE;
+
+
+CREATE SEQUENCE SEQ_ACTA
+ INCREMENT BY 1
+ MAXVALUE 9422
+ MINVALUE 0
+ NOCACHE;
+
+
+-- Create tables section -------------------------------------------------
+
+-- Table ACTA
+
+CREATE TABLE ACTA(
+  ID_ACTA Integer CONSTRAINT SYS_C0013380 NOT NULL,
+  ID_BOLSA_SEGURIDAD Integer,
+  JRV Varchar2(30 ) CONSTRAINT SYS_C0013381 NOT NULL,
+  ID_CATALOGO_RECIBIDA Integer CONSTRAINT SYS_C0013382 NOT NULL,
+  ID_PRESTADA Integer CONSTRAINT SYS_C0013383 NOT NULL,
+  BARCODE Varchar2(25 ),
+  ESTADO Integer,
+  INCONSISTENCIA Integer,
+  ID_EVENTO Integer
+);
+
+
+-- Create indexes for table ACTA
+
+CREATE INDEX IDX_BARCODE_ACTA ON ACTA (BARCODE);
+
+
+CREATE INDEX IX_RELATIONSHIP21 ON ACTA (ID_CATALOGO_RECIBIDA);
+
+
+CREATE INDEX IX_RELATIONSHIP24 ON ACTA (ID_PRESTADA);
+
+
+CREATE INDEX IX_RELATIONSHIP6 ON ACTA (ID_BOLSA_SEGURIDAD,ID_EVENTO);
+
+
+-- Add keys for table ACTA
+
+ALTER TABLE ACTA ADD CONSTRAINT KEY8 PRIMARY KEY (ID_ACTA);
+
+
+-- Table BITACORA_PRESTAMO
+
+CREATE TABLE BITACORA_PRESTAMO(
+  ID_ACTA Integer,
+  NOMBRE_PRESTO Varchar2(255 ),
+  ESTADO Integer,
+  FECHA Varchar2(100 ),
+  HORA_PRESTAMO Varchar2(100 )
+);
+
+
+-- Add keys for table BITACORA_PRESTAMO
+
+ALTER TABLE BITACORA_PRESTAMO ADD CONSTRAINT BITACORA_PRESTAMO_PK PRIMARY KEY (ID_ACTA,HORA_PRESTAMO);
+
+
+-- Table BOLSA_SEGURIDAD
+
+CREATE TABLE BOLSA_SEGURIDAD(
+  ID_BOLSA_SEGURIDAD Integer CONSTRAINT SYS_C0013385 NOT NULL,
+  ID_CENTRO_VOTACION Integer CONSTRAINT SYS_C0013386 NOT NULL,
+  ID_MUNICIPIO Integer,
+  ID_DEPARTAMENTO Integer,
+  ID_SEDE Integer,
+  ID_CATALOGO_RECIBIDA Integer CONSTRAINT SYS_C0013387 NOT NULL,
+  RUTA_CAMION Varchar2(10 ),
+  CODIGO_BARRA Varchar2(30 ),
+  ID_EVENTO Integer NOT NULL
+);
+
+
+-- Create indexes for table BOLSA_SEGURIDAD
+
+CREATE INDEX IX_RELATIONSHIP20 ON BOLSA_SEGURIDAD (ID_CATALOGO_RECIBIDA);
+
+
+CREATE INDEX IX_RELATIONSHIP5 ON BOLSA_SEGURIDAD (ID_CENTRO_VOTACION,ID_MUNICIPIO,ID_DEPARTAMENTO,ID_SEDE);
+
+
+CREATE INDEX IX_Relationship23 ON BOLSA_SEGURIDAD (ID_EVENTO);
+
+
+-- Add keys for table BOLSA_SEGURIDAD
+
+ALTER TABLE BOLSA_SEGURIDAD ADD CONSTRAINT KEY7 PRIMARY KEY (ID_BOLSA_SEGURIDAD,ID_EVENTO);
+
+
+-- Table CATALOGO_PRESTADA
+
+CREATE TABLE CATALOGO_PRESTADA(
+  ID_PRESTADA Integer CONSTRAINT SYS_C0013389 NOT NULL,
+  NOMBRE_PRESTADA Varchar2(30 )
+);
+
+
+-- Add keys for table CATALOGO_PRESTADA
+
+ALTER TABLE CATALOGO_PRESTADA ADD CONSTRAINT KEY16 PRIMARY KEY (ID_PRESTADA);
+
+
+-- Table CATALOGO_RECIBIDA
+
+CREATE TABLE CATALOGO_RECIBIDA(
+  ID_CATALOGO_RECIBIDA Integer CONSTRAINT SYS_C0013391 NOT NULL,
+  NOMBRE_RECIBIDA Varchar2(30 )
+);
+
+
+-- Add keys for table CATALOGO_RECIBIDA
+
+ALTER TABLE CATALOGO_RECIBIDA ADD CONSTRAINT KEY15 PRIMARY KEY (ID_CATALOGO_RECIBIDA);
+
+
+-- Table CATALOGO_RUTA
+
+CREATE TABLE CATALOGO_RUTA(
+  ID_RUTA Integer CONSTRAINT SYS_C0013393 NOT NULL,
+  NOMBRE_RUTA Varchar2(30 )
+);
+
+
+-- Add keys for table CATALOGO_RUTA
+
+ALTER TABLE CATALOGO_RUTA ADD CONSTRAINT KEY14 PRIMARY KEY (ID_RUTA);
+
+
+-- Table CENTRO_VOTACION
+
+CREATE TABLE CENTRO_VOTACION(
+  ID_CENTRO_VOTACION Integer CONSTRAINT SYS_C0013395 NOT NULL,
+  NOMBRE_CENTRO_VOTACION Varchar2(255 ),
+  ID_MUNICIPIO Integer CONSTRAINT SYS_C0013396 NOT NULL,
+  ID_DEPARTAMENTO Integer CONSTRAINT SYS_C0013397 NOT NULL,
+  ID_SEDE Integer CONSTRAINT SYS_C0013398 NOT NULL,
+  ID_RUTA Integer
+);
+
+
+-- Create indexes for table CENTRO_VOTACION
+
+CREATE INDEX IX_RELATIONSHIP19 ON CENTRO_VOTACION (ID_RUTA);
+
+
+-- Add keys for table CENTRO_VOTACION
+
+ALTER TABLE CENTRO_VOTACION ADD CONSTRAINT KEY6 PRIMARY KEY (ID_CENTRO_VOTACION,ID_MUNICIPIO,ID_DEPARTAMENTO,ID_SEDE);
+
+
+-- Table COD_PRUEBA
+
+CREATE TABLE COD_PRUEBA(
+  ANIO Integer,
+  JRV Integer,
+  TIPO_ELECCION Integer,
+  FOLIO Integer,
+  COD_SEGURIDAD Integer,
+  COD_DEPTO Integer
+);
+
+
+-- Table DEPARTAMENTO
+
+CREATE TABLE DEPARTAMENTO(
+  ID_DEPARTAMENTO Integer CONSTRAINT SYS_C0013402 NOT NULL,
+  NOMBRE_DEPARTAMENTO Varchar2(30 )
+);
+
+
+-- Add keys for table DEPARTAMENTO
+
+ALTER TABLE DEPARTAMENTO ADD CONSTRAINT KEY3 PRIMARY KEY (ID_DEPARTAMENTO);
+
+
+-- Table ESTADO_RECEPCION
+
+CREATE TABLE ESTADO_RECEPCION(
+  ID_ESTADO Integer,
+  DESCRIPCION Varchar2(255 )
+);
+
+
+-- Add keys for table ESTADO_RECEPCION
+
+ALTER TABLE ESTADO_RECEPCION ADD CONSTRAINT ESTADO_RECEPCION_PK PRIMARY KEY (ID_ESTADO);
+
+
+-- Table FOLIO
+
+CREATE TABLE FOLIO(
+  ID_FOLIO Integer CONSTRAINT SYS_C0013404 NOT NULL,
+  ID_TIPO_FOLIO Integer CONSTRAINT SYS_C0013405 NOT NULL,
+  ID_ACTA Integer,
+  ID_CATALOGO_RECIBIDA Integer CONSTRAINT SYS_C0013408 NOT NULL,
+  ID_TIPO_ELECCION Integer,
+  INCONSISTENCIA Integer,
+  RFID Char(24 ),
+  CODIGO_BARRA Varchar2(30 )
+);
+
+
+-- Create indexes for table FOLIO
+
+CREATE INDEX IX_RELATIONSHIP13 ON FOLIO (ID_TIPO_FOLIO);
+
+
+CREATE INDEX IX_RELATIONSHIP14 ON FOLIO (ID_ACTA);
+
+
+CREATE INDEX IX_RELATIONSHIP22 ON FOLIO (ID_CATALOGO_RECIBIDA);
+
+
+-- Add keys for table FOLIO
+
+ALTER TABLE FOLIO ADD CONSTRAINT KEY11 PRIMARY KEY (ID_FOLIO);
+
+
+-- Table INCONSISTENCIA
+
+CREATE TABLE INCONSISTENCIA(
+  INCONSISTENCIA Integer,
+  NOMBRE_INCONSISTENCIA Varchar2(255 )
+);
+
+
+-- Add keys for table INCONSISTENCIA
+
+ALTER TABLE INCONSISTENCIA ADD CONSTRAINT INCONSISTENCIA_PK PRIMARY KEY (INCONSISTENCIA);
+
+
+-- Table MUNICIPIO
+
+CREATE TABLE MUNICIPIO(
+  ID_MUNICIPIO Integer CONSTRAINT SYS_C0013410 NOT NULL,
+  NOMBRE_MUNICIPIO Varchar2(30 ),
+  ID_DEPARTAMENTO Integer CONSTRAINT SYS_C0013411 NOT NULL,
+  ID_SEDE Integer CONSTRAINT SYS_C0013412 NOT NULL
+);
+
+
+-- Add keys for table MUNICIPIO
+
+ALTER TABLE MUNICIPIO ADD CONSTRAINT KEY4 PRIMARY KEY (ID_MUNICIPIO,ID_DEPARTAMENTO,ID_SEDE);
+
+
+-- Table ROL
+
+CREATE TABLE ROL(
+  ID_ROL Integer CONSTRAINT SYS_C0013417 NOT NULL,
+  NOMBRE_ROL Varchar2(30 )
+);
+
+
+-- Add keys for table ROL
+
+ALTER TABLE ROL ADD CONSTRAINT KEY1 PRIMARY KEY (ID_ROL);
+
+
+-- Table SEDE_LOGISTICA
+
+CREATE TABLE SEDE_LOGISTICA(
+  ID_SEDE Integer CONSTRAINT SYS_C0013419 NOT NULL,
+  NOMBRE_SEDE Varchar2(30 ),
+  UBICACION_SEDE Varchar2(255 ),
+  ID_DEPARTAMENTO Integer CONSTRAINT SYS_C0013420 NOT NULL
+);
+
+
+-- Add keys for table SEDE_LOGISTICA
+
+ALTER TABLE SEDE_LOGISTICA ADD CONSTRAINT KEY13 PRIMARY KEY (ID_DEPARTAMENTO,ID_SEDE);
+
+
+-- Table TIPO_ELECCION
+
+CREATE TABLE TIPO_ELECCION(
+  ID_TIPO_ELECION Integer CONSTRAINT SYS_C0013422 NOT NULL,
+  NOMBRE_TIPO_ELECCION Varchar2(255 ) CONSTRAINT SYS_C0013423 NOT NULL
+);
+
+
+-- Add keys for table TIPO_ELECCION
+
+ALTER TABLE TIPO_ELECCION ADD CONSTRAINT TIPO_ELECCION_PK PRIMARY KEY (ID_TIPO_ELECION);
+
+
+-- Table TIPO_FOLIO
+
+CREATE TABLE TIPO_FOLIO(
+  ID_TIPO_FOLIO Integer CONSTRAINT SYS_C0013425 NOT NULL,
+  NOMBRE_TIPO_FOLIO Varchar2(30 )
+);
+
+
+-- Add keys for table TIPO_FOLIO
+
+ALTER TABLE TIPO_FOLIO ADD CONSTRAINT KEY12 PRIMARY KEY (ID_TIPO_FOLIO);
+
+
+-- Table USUARIO
+
+CREATE TABLE USUARIO(
+  ID_USUARIO Integer CONSTRAINT SYS_C0013427 NOT NULL,
+  NOMBRE_USUARIO Varchar2(30 ) CONSTRAINT SYS_C0013428 NOT NULL,
+  PASSWORD Varchar2(30 ) CONSTRAINT SYS_C0013429 NOT NULL,
+  ID_ROL Integer
+);
+
+
+-- Create indexes for table USUARIO
+
+CREATE INDEX IX_RELATIONSHIP1 ON USUARIO (ID_ROL);
+
+
+-- Add keys for table USUARIO
+
+ALTER TABLE USUARIO ADD CONSTRAINT KEY2 PRIMARY KEY (ID_USUARIO);
+
+
+-- Table EVENTO
+
+CREATE TABLE EVENTO(
+  ID_EVENTO Integer NOT NULL,
+  NOMBRE_EVENTO Varchar2(30 ),
+  DESCRIPCION_EVENTO Varchar2(255 )
+);
+
+
+-- Add keys for table EVENTO
+
+ALTER TABLE EVENTO ADD CONSTRAINT pk_evento PRIMARY KEY (ID_EVENTO);
+
+
+-- Table UBICACIONES
+
+CREATE TABLE UBICACIONES(
+  ID_UBICACION Integer NOT NULL,
+  NOMBRE_UBICACION Varchar2(30 ) NOT NULL,
+  IP_UBICACION Varchar2(30 ) NOT NULL
+);
+
+
+-- Add keys for table UBICACIONES
+
+ALTER TABLE UBICACIONES ADD CONSTRAINT PK_UBICACION PRIMARY KEY (ID_UBICACION);
+
+
+-- Create functions section -------------------------------------------------
+
+CREATE FUNCTION FOLIOSEQUENCIA
+RETURN integer
+is
+data integer;
+
+begin
+select FOLIO_SEQ.nextval
+into data
+ from dual;
+ return(data);
+end;
+
+
+-- Create views section -------------------------------------------------
+
+CREATE VIEW RUTAS_CAMIONES_VIEW(NOMBRE_DEPARTAMENTO,NOMBRE_SEDE,NOMBRE_MUNICIPIO,NOMBRE_CENTRO_VOTACION,RUTA,SEDE,ID_BOLSA_SEGURIDAD,CODIGO_BARRA) AS
+SELECT dep.NOMBRE_DEPARTAMENTO,
+            sed.NOMBRE_SEDE,
+            mun.NOMBRE_MUNICIPIO,
+            CV.NOMBRE_CENTRO_VOTACION,
+            BOL.RUTA_CAMION AS RUTA,
+            CV.id_sede AS SEDE,
+            BOL.ID_BOLSA_SEGURIDAD,
+            bol.CODIGO_BARRA
+       FROM DEPARTAMENTO dep
+            JOIN SEDE_LOGISTICA sed
+               ON dep.id_departamento = sed.ID_DEPARTAMENTO
+            JOIN municipio mun ON sed.ID_SEDE = mun.ID_SEDE
+            JOIN centro_votacion CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            JOIN CATALOGO_RUTA catrut ON catrut.ID_RUTA = CV.ID_RUTA
+            JOIN bolsa_seguridad bol
+               ON CV.id_centro_votacion = bol.id_centro_votacion
+      WHERE     bol.id_catalogo_recibida = 1
+            and bol.id_municipio=cv.id_municipio
+            and BOL.ID_CENTRO_VOTACION=cv.id_centro_votacion 
+            and BOL.ID_DEPARTAMENTO=cv.id_departamento
+            and bol.id_sede=cv.id_sede 
+            AND dep.ID_DEPARTAMENTO = CV.ID_DEPARTAMENTO
+            AND mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            and cv.id_sede=sed.id_sede and mun.id_sede=sed.id_sede 
+            and mun.id_departamento=dep.id_departamento
+            
+   ORDER BY dep.NOMBRE_DEPARTAMENTO;
+
+
+CREATE VIEW REPORTE_ACTAS_INCOMPLETAS_VIEW(NOMBRE_CENTRO_VOTACION,NOMBRE_MUNICIPIO,NOMBRE_DEPARTAMENTO,ID_DEPARTAMENTO,JRV,ID_MUNICIPIO,ID_SEDE,ID_CENTRO_VOTACION,ID_CATALOGO_RECIBIDA,NOMBRE_RECIBIDA) AS
+SELECT 
+            nombre_centro_votacion,
+            nombre_municipio,
+            dep.NOMBRE_DEPARTAMENTO,
+            dep.ID_DEPARTAMENTO,
+           jrv,
+            id_municipio,
+            id_sede,
+            cv.id_centro_votacion,
+           ac.id_catalogo_recibida,
+           catrec.NOMBRE_RECIBIDA
+            
+       FROM catalogo_recibida catrec
+            join acta ac on AC.ID_CATALOGO_RECIBIDA=CATREC.ID_CATALOGO_RECIBIDA
+            JOIN BOLSA_SEGURIDAD bol
+               ON ac.ID_BOLSA_SEGURIDAD = bol.ID_BOLSA_SEGURIDAD
+            JOIN centro_votacion CV
+               ON bol.ID_CENTRO_VOTACION = CV.ID_CENTRO_VOTACION
+            JOIN MUNICIPIO mun ON CV.ID_MUNICIPIO = mun.ID_MUNICIPIO
+            JOIN departamento dep ON mun.id_Departamento = dep.ID_DEPARTAMENTO
+      WHERE  bol.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO
+            AND bol.ID_CENTRO_VOTACION = CV.ID_CENTRO_VOTACION
+            AND bol.ID_MUNICIPIO = mun.ID_MUNICIPIO
+            AND CV.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO
+            AND CV.ID_MUNICIPIO = mun.ID_MUNICIPIO
+   ORDER BY id_centro_votacion;
+
+
+CREATE VIEW REPORTES_RECEPCION_VIEW(NOMBRE_DEPARTAMENTO,NOMBRE_SEDE,NOMBRE_MUNICIPIO,NOMBRE_CENTRO_VOTACION,NOMBRE_RUTA,RUTA,SEDE,ID_BOLSA_SEGURIDAD,CODIGO_BARRA,ID_CATALOGO_RECIBIDA) AS
+SELECT dep.NOMBRE_DEPARTAMENTO,
+            sed.NOMBRE_SEDE,
+            mun.NOMBRE_MUNICIPIO,
+            CV.NOMBRE_CENTRO_VOTACION,
+            catrut.nombre_ruta,
+            CV.ID_RUTA AS RUTA,
+            CV.id_sede AS SEDE,
+            BOL.ID_BOLSA_SEGURIDAD,
+            bol.CODIGO_BARRA,
+            bol.ID_CATALOGO_RECIBIDA
+                        
+       FROM DEPARTAMENTO dep
+            JOIN SEDE_LOGISTICA sed
+               ON dep.id_departamento = sed.ID_DEPARTAMENTO
+            JOIN municipio mun ON sed.ID_SEDE = mun.ID_SEDE
+            JOIN centro_votacion CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            JOIN CATALOGO_RUTA catrut ON catrut.ID_RUTA = CV.ID_RUTA
+            JOIN bolsa_seguridad bol
+               ON CV.id_centro_votacion = bol.id_centro_votacion
+      WHERE  bol.id_municipio=cv.id_municipio
+            and BOL.ID_CENTRO_VOTACION=cv.id_centro_votacion 
+            and BOL.ID_DEPARTAMENTO=cv.id_departamento
+            and bol.id_sede=cv.id_sede 
+            AND dep.ID_DEPARTAMENTO = CV.ID_DEPARTAMENTO
+            AND mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            and cv.id_sede=sed.id_sede and mun.id_sede=sed.id_sede 
+            and mun.id_departamento=dep.id_departamento
+   ORDER BY dep.NOMBRE_DEPARTAMENTO;
+
+
+CREATE VIEW REPORTES_FALTANTES_VIEW(NOMBRE_TIPO_ELECCION,NOMBRE_TIPO_FOLIO,JRV,NOMBRE_CENTRO_VOTACION,NOMBRE_MUNICIPIO,NOMBRE_DEPARTAMENTO,ID_DEPARTAMENTO,ID_TIPO_ELECCION,ID_MUNICIPIO,ID_SEDE,ID_CENTRO_VOTACION,ID_CATALOGO_RECIBIDA,NOMBRE_RECIBIDA,ACTA_RECIBIDA) AS
+SELECT nombre_tipo_eleccion,
+            tipol.nombre_tipo_folio,
+            jrv,
+            nombre_centro_votacion,
+            nombre_municipio,
+            dep.NOMBRE_DEPARTAMENTO,
+            dep.ID_DEPARTAMENTO,
+            id_tipo_eleccion,
+            id_municipio,
+            id_sede,
+            cv.id_centro_votacion,
+           fol.id_catalogo_recibida,
+           catrec.NOMBRE_RECIBIDA, 
+           AC.ID_CATALOGO_RECIBIDA ACTA_RECIBIDA
+            
+       FROM TIPO_ELECCION tipel
+            JOIN folio fol ON tipel.ID_TIPO_ELECION= fol.ID_TIPO_ELECCION
+            join catalogo_recibida catrec on fol.id_catalogo_recibida=catrec.id_catalogo_recibida
+            join tipo_folio tipol on TIPOL.ID_TIPO_FOLIO=FOL.ID_TIPO_FOLIO 
+            JOIN acta ac ON fol.ID_ACTA = ac.ID_ACTA
+            JOIN BOLSA_SEGURIDAD bol
+               ON ac.ID_BOLSA_SEGURIDAD = bol.ID_BOLSA_SEGURIDAD
+            JOIN centro_votacion CV
+               ON bol.ID_CENTRO_VOTACION = CV.ID_CENTRO_VOTACION
+            JOIN MUNICIPIO mun ON CV.ID_MUNICIPIO = mun.ID_MUNICIPIO
+            JOIN departamento dep ON mun.id_Departamento = dep.ID_DEPARTAMENTO
+      WHERE  bol.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO
+            AND bol.ID_CENTRO_VOTACION = CV.ID_CENTRO_VOTACION
+            AND bol.ID_MUNICIPIO = mun.ID_MUNICIPIO
+            AND CV.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO
+            AND CV.ID_MUNICIPIO = mun.ID_MUNICIPIO
+   ORDER BY id_folio, jrv;
+
+
+CREATE VIEW REPORTES_CAMIONES_VIEW(NOMBRE_DEPARTAMENTO,NOMBRE_SEDE,NOMBRE_MUNICIPIO,NOMBRE_CENTRO_VOTACION,RUTA,SEDE,ID_BOLSA_SEGURIDAD,CODIGO_BARRA,ID_CATALOGO_RECIBIDA) AS
+SELECT dep.NOMBRE_DEPARTAMENTO,
+            sed.NOMBRE_SEDE,
+            mun.NOMBRE_MUNICIPIO,
+            CV.NOMBRE_CENTRO_VOTACION,
+            bol.ruta_camion AS RUTA,
+            CV.id_sede AS SEDE,
+            BOL.ID_BOLSA_SEGURIDAD,
+            bol.CODIGO_BARRA,
+            bol.ID_CATALOGO_RECIBIDA
+                        
+       FROM DEPARTAMENTO dep
+            JOIN SEDE_LOGISTICA sed
+               ON dep.id_departamento = sed.ID_DEPARTAMENTO
+            JOIN municipio mun ON sed.ID_SEDE = mun.ID_SEDE
+            JOIN centro_votacion CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            JOIN CATALOGO_RUTA catrut ON catrut.ID_RUTA = CV.ID_RUTA
+            JOIN bolsa_seguridad bol
+               ON CV.id_centro_votacion = bol.id_centro_votacion
+      WHERE  bol.id_municipio=cv.id_municipio
+            and BOL.ID_CENTRO_VOTACION=cv.id_centro_votacion 
+            and BOL.ID_DEPARTAMENTO=cv.id_departamento
+            and bol.id_sede=cv.id_sede 
+            AND dep.ID_DEPARTAMENTO = CV.ID_DEPARTAMENTO
+            AND mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            and cv.id_sede=sed.id_sede and mun.id_sede=sed.id_sede 
+            and mun.id_departamento=dep.id_departamento
+   ORDER BY dep.NOMBRE_DEPARTAMENTO;
+
+
+CREATE VIEW PASOS_RECEPCION_VIEW(JRV,ID_ESTADO,DESCRIPCION,NOMBRE_CENTRO_VOTACION,NOMBRE_MUNICIPIO,NOMBRE_DEPARTAMENTO,NOMBRE_TIPO_FOLIO) AS
+select  jrv,recep.id_estado,recep.descripcion, cv.nombre_centro_votacion, mun.nombre_municipio, dep.nombre_departamento,tpfol.nombre_tipo_folio
+from    folio fol join
+         acta ac on fol.id_acta=ac.id_acta
+        join tipo_folio tpfol on fol.id_tipo_folio=tpfol.id_tipo_folio 
+        join estado_recepcion recep on ac.estado=recep.id_estado
+        join bolsa_seguridad bol on ac.id_bolsa_seguridad=bol.id_bolsa_seguridad
+        join centro_votacion cv on bol.id_centro_votacion=cv.id_centro_votacion
+        join municipio mun on mun.id_municipio=cv.id_municipio
+        join sede_logistica sed on sed.id_sede=mun.id_sede
+        join departamento dep on DEP.ID_DEPARTAMENTO=sed.id_departamento
+where   BOL.ID_MUNICIPIO=cv.id_municipio and BOL.ID_SEDE=cv.id_sede and BOL.ID_DEPARTAMENTO=cv.id_departamento
+        and cv.id_municipio=mun.id_municipio and cv.id_sede=mun.id_sede and cv.id_departamento=mun.id_departamento 
+        and mun.id_sede=SED.ID_SEDE and mun.id_departamento=SED.ID_DEPARTAMENTO
+        and sed.id_departamento=dep.id_departamento;
+
+
+CREATE VIEW FOLIO_BOLSA_BARCODE_VIEW(BOLSA_SEGURIDAD_BARCODE,FOLIO_BARCODE) AS
+SELECT ac.barcode AS BOLSA_SEGURIDAD_BARCODE,
+          fol.CODIGO_BARRA AS FOLIO_BARCODE
+     FROM BOLSA_SEGURIDAD bol
+          JOIN ACTA ac ON ac.id_bolsa_seguridad = bol.id_bolsa_seguridad
+          JOIN folio fol ON ac.id_acta = fol.id_acta;
+
+
+CREATE VIEW CONSULTAR_FOLIO_FALTANTE_VIEW(FOLIO,JRV,BARCODE) AS
+SELECT tpfol.NOMBRE_TIPO_FOLIO AS FOLIO,
+            ac.JRV AS JRV, AC.BARCODE as BARCODE
+            
+FROM        TIPO_FOLIO tpfol
+            JOIN folio fol ON tpfol.ID_TIPO_FOLIO = fol.ID_TIPO_FOLIO
+            JOIN ACTA ac ON fol.ID_ACTA = ac.ID_ACTA
+WHERE       fol.ID_CATALOGO_RECIBIDA = 1
+ORDER BY    tpfol.NOMBRE_TIPO_FOLIO,JRV;
+
+
+CREATE VIEW COMBOBOX_MONITOREO_VIEW(ID_DEPARTAMENTO,NOMBRE_DEPARTAMENTO,ID_SEDE,NOMBRE_SEDE,ID_MUNICIPIO,NOMBRE_MUNICIPIO,ID_CENTRO_VOTACION,NOMBRE_CENTRO_VOTACION) AS
+SELECT DISTINCT dep.ID_DEPARTAMENTO,
+                   dep.NOMBRE_DEPARTAMENTO,
+                   sed.ID_SEDE,
+                   sed.NOMBRE_SEDE,
+                   mun.ID_MUNICIPIO,
+                   mun.NOMBRE_MUNICIPIO,
+                   CV.ID_CENTRO_VOTACION,
+                   CV.NOMBRE_CENTRO_VOTACION
+     FROM CENTRO_VOTACION CV
+          JOIN MUNICIPIO mun ON CV.id_municipio = mun.id_municipio
+          JOIN sede_logistica sed ON mun.id_sede = sed.id_sede
+          JOIN Departamento dep ON sed.id_departamento = dep.id_departamento
+    WHERE     CV.ID_MUNICIPIO = mun.ID_MUNICIPIO
+          AND CV.ID_SEDE = sed.ID_SEDE
+          AND CV.id_Departamento = dep.ID_DEPARTAMENTO;
+
+
+CREATE VIEW CODIGO_PRESTAMO_VIEW(ACTA,CODIGO_BARRA,FOLIO,JRV,TIPO_ELECCION,CENTRO_VOTACION,MUNICIPIO,DEPARTAMENTO) AS
+SELECT ac.id_acta AS acta,
+          fol.CODIGO_BARRA,
+          tpfol.NOMBRE_TIPO_FOLIO AS FOLIO,
+          ac.JRV,
+          tipel.NOMBRE_TIPO_ELECCION AS TIPO_ELECCION,
+          CV.NOMBRE_CENTRO_VOTACION AS CENTRO_VOTACION,
+          mun.NOMBRE_MUNICIPIO AS MUNICIPIO,
+          dep.NOMBRE_DEPARTAMENTO AS DEPARTAMENTO
+     FROM DEPARTAMENTO dep
+          JOIN MUNICIPIO mun ON dep.ID_departamento = mun.ID_departamento
+          JOIN CENTRO_VOTACION CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+          JOIN BOLSA_SEGURIDAD bol
+             ON CV.ID_CENTRO_VOTACION = bol.ID_CENTRO_VOTACION
+          JOIN acta ac ON bol.ID_BOLSA_SEGURIDAD = ac.ID_BOLSA_SEGURIDAD
+          JOIN folio fol ON ac.ID_ACTA = fol.ID_ACTA
+          JOIN tipo_folio tpfol ON fol.ID_TIPO_FOLIO = tpfol.ID_TIPO_FOLIO
+          JOIN TIPO_ELECCION tipel
+             ON tipel.ID_TIPO_ELECION = fol.ID_TIPO_ELECCION
+    WHERE     bol.ID_CENTRO_VOTACION = CV.ID_CENTRO_VOTACION
+          AND bol.ID_MUNICIPIO = mun.ID_MUNICIPIO
+          AND bol.ID_DEPARTAMENTO = mun.ID_DEPARTAMENTO
+          AND CV.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO;
+
+
+CREATE VIEW CARGAR_BOLSAS_SEGURIDAD_VIEW(NOMBRE_DEPARTAMENTO,NOMBRE_SEDE,NOMBRE_MUNICIPIO,NOMBRE_CENTRO_VOTACION,NOMBRE_RUTA,RUTA,SEDE,ID_BOLSA_SEGURIDAD,CODIGO_BARRA) AS
+SELECT dep.NOMBRE_DEPARTAMENTO,
+            sed.NOMBRE_SEDE,
+            mun.NOMBRE_MUNICIPIO,
+            CV.NOMBRE_CENTRO_VOTACION,
+            catrut.nombre_ruta,
+            CV.ID_RUTA AS RUTA,
+            CV.id_sede AS SEDE,
+            BOL.ID_BOLSA_SEGURIDAD,
+            bol.CODIGO_BARRA
+       FROM DEPARTAMENTO dep
+            JOIN SEDE_LOGISTICA sed
+               ON dep.id_departamento = sed.ID_DEPARTAMENTO
+            JOIN municipio mun ON sed.ID_SEDE = mun.ID_SEDE
+            JOIN centro_votacion CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            JOIN CATALOGO_RUTA catrut ON catrut.ID_RUTA = CV.ID_RUTA
+            JOIN bolsa_seguridad bol
+               ON CV.id_centro_votacion = bol.id_centro_votacion
+      WHERE     bol.id_catalogo_recibida = 1
+            and bol.id_municipio=cv.id_municipio
+            and BOL.ID_CENTRO_VOTACION=cv.id_centro_votacion 
+            and BOL.ID_DEPARTAMENTO=cv.id_departamento
+            and bol.id_sede=cv.id_sede 
+            AND dep.ID_DEPARTAMENTO = CV.ID_DEPARTAMENTO
+            AND mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            and cv.id_sede=sed.id_sede and mun.id_sede=sed.id_sede 
+            and mun.id_departamento=dep.id_departamento
+            
+   ORDER BY dep.NOMBRE_DEPARTAMENTO;
+
+
+CREATE VIEW BOLSAS_JRV(NOMBRE_DEPARTAMENTO,NOMBRE_SEDE,NOMBRE_MUNICIPIO,NOMBRE_CENTRO_VOTACION,NOMBRE_RUTA,RUTA,SEDE,ID_ACTA,BARCODE) AS
+SELECT dep.NOMBRE_DEPARTAMENTO,
+            sed.NOMBRE_SEDE,
+            mun.NOMBRE_MUNICIPIO,
+            CV.NOMBRE_CENTRO_VOTACION,
+            catrut.nombre_ruta,
+            CV.ID_RUTA AS RUTA,
+            CV.id_sede AS SEDE,
+            ac.id_acta,
+           ac.barcode
+       FROM DEPARTAMENTO dep
+            JOIN SEDE_LOGISTICA sed
+               ON dep.id_departamento = sed.ID_DEPARTAMENTO
+            JOIN municipio mun ON sed.ID_SEDE = mun.ID_SEDE
+            JOIN centro_votacion CV ON mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            JOIN CATALOGO_RUTA catrut ON catrut.ID_RUTA = CV.ID_RUTA
+            JOIN bolsa_seguridad bol
+               ON CV.id_centro_votacion = bol.id_centro_votacion
+            JOIN acta ac on AC.ID_BOLSA_SEGURIDAD=BOL.ID_BOLSA_SEGURIDAD
+      WHERE     bol.id_catalogo_recibida = 1
+            and bol.id_municipio=cv.id_municipio
+            and BOL.ID_CENTRO_VOTACION=cv.id_centro_votacion 
+            and BOL.ID_DEPARTAMENTO=cv.id_departamento
+            and bol.id_sede=cv.id_sede 
+            AND dep.ID_DEPARTAMENTO = CV.ID_DEPARTAMENTO
+            AND mun.ID_MUNICIPIO = CV.ID_MUNICIPIO
+            and cv.id_sede=sed.id_sede and mun.id_sede=sed.id_sede 
+            and mun.id_departamento=dep.id_departamento
+            
+   ORDER BY dep.NOMBRE_DEPARTAMENTO;
+
+
+
+-- Create foreign keys (relationships) section ------------------------------------------------- 
+
+ALTER TABLE BITACORA_PRESTAMO ADD CONSTRAINT FK_ACTA FOREIGN KEY (ID_ACTA) REFERENCES ACTA (ID_ACTA);
+
+
+
+ALTER TABLE BITACORA_PRESTAMO ADD CONSTRAINT FK_BIT_ESTADO FOREIGN KEY (ESTADO) REFERENCES CATALOGO_PRESTADA (ID_PRESTADA);
+
+
+
+ALTER TABLE ACTA ADD CONSTRAINT FK_ESTADO_RECEP FOREIGN KEY (ESTADO) REFERENCES ESTADO_RECEPCION (ID_ESTADO);
+
+
+
+ALTER TABLE ACTA ADD CONSTRAINT FK_INCONSISTENCIA FOREIGN KEY (INCONSISTENCIA) REFERENCES INCONSISTENCIA (INCONSISTENCIA) ON DELETE CASCADE;
+
+
+
+ALTER TABLE FOLIO ADD CONSTRAINT FOLIO_FK1 FOREIGN KEY (ID_TIPO_ELECCION) REFERENCES TIPO_ELECCION (ID_TIPO_ELECION) DISABLE VALIDATE;
+
+
+
+ALTER TABLE USUARIO ADD CONSTRAINT RELATIONSHIP1 FOREIGN KEY (ID_ROL) REFERENCES ROL (ID_ROL);
+
+
+
+ALTER TABLE FOLIO ADD CONSTRAINT RELATIONSHIP13 FOREIGN KEY (ID_TIPO_FOLIO) REFERENCES TIPO_FOLIO (ID_TIPO_FOLIO);
+
+
+
+ALTER TABLE FOLIO ADD CONSTRAINT RELATIONSHIP14 FOREIGN KEY (ID_ACTA) REFERENCES ACTA (ID_ACTA);
+
+
+
+ALTER TABLE SEDE_LOGISTICA ADD CONSTRAINT RELATIONSHIP16 FOREIGN KEY (ID_DEPARTAMENTO) REFERENCES DEPARTAMENTO (ID_DEPARTAMENTO);
+
+
+
+ALTER TABLE MUNICIPIO ADD CONSTRAINT RELATIONSHIP17 FOREIGN KEY (ID_DEPARTAMENTO, ID_SEDE) REFERENCES SEDE_LOGISTICA (ID_DEPARTAMENTO, ID_SEDE);
+
+
+
+ALTER TABLE CENTRO_VOTACION ADD CONSTRAINT RELATIONSHIP18 FOREIGN KEY (ID_MUNICIPIO, ID_DEPARTAMENTO, ID_SEDE) REFERENCES MUNICIPIO (ID_MUNICIPIO, ID_DEPARTAMENTO, ID_SEDE);
+
+
+
+ALTER TABLE CENTRO_VOTACION ADD CONSTRAINT RELATIONSHIP19 FOREIGN KEY (ID_RUTA) REFERENCES CATALOGO_RUTA (ID_RUTA) NOVALIDATE;
+
+
+
+ALTER TABLE BOLSA_SEGURIDAD ADD CONSTRAINT RELATIONSHIP20 FOREIGN KEY (ID_CATALOGO_RECIBIDA) REFERENCES CATALOGO_RECIBIDA (ID_CATALOGO_RECIBIDA);
+
+
+
+ALTER TABLE ACTA ADD CONSTRAINT RELATIONSHIP21 FOREIGN KEY (ID_CATALOGO_RECIBIDA) REFERENCES CATALOGO_RECIBIDA (ID_CATALOGO_RECIBIDA);
+
+
+
+ALTER TABLE FOLIO ADD CONSTRAINT RELATIONSHIP22 FOREIGN KEY (ID_CATALOGO_RECIBIDA) REFERENCES CATALOGO_RECIBIDA (ID_CATALOGO_RECIBIDA);
+
+
+
+ALTER TABLE ACTA ADD CONSTRAINT RELATIONSHIP24 FOREIGN KEY (ID_PRESTADA) REFERENCES CATALOGO_PRESTADA (ID_PRESTADA);
+
+
+
+ALTER TABLE BOLSA_SEGURIDAD ADD CONSTRAINT RELATIONSHIP5 FOREIGN KEY (ID_CENTRO_VOTACION, ID_MUNICIPIO, ID_DEPARTAMENTO, ID_SEDE) REFERENCES CENTRO_VOTACION (ID_CENTRO_VOTACION, ID_MUNICIPIO, ID_DEPARTAMENTO, ID_SEDE);
+
+
+
+ALTER TABLE ACTA ADD CONSTRAINT RELATIONSHIP6 FOREIGN KEY (ID_BOLSA_SEGURIDAD, ID_EVENTO) REFERENCES BOLSA_SEGURIDAD (ID_BOLSA_SEGURIDAD, ID_EVENTO);
+
+
+
+ALTER TABLE BOLSA_SEGURIDAD ADD CONSTRAINT Relationship23 FOREIGN KEY (ID_EVENTO) REFERENCES EVENTO (ID_EVENTO);
+
+
+
+
+
+-- Grant permissions section -------------------------------------------------
+
+
